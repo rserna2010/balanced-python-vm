@@ -21,3 +21,29 @@
 include_recipe "python::#{node['python']['install_method']}"
 include_recipe "python::pip"
 include_recipe "python::virtualenv"
+include_recipe "git"
+
+
+python_virtualenv "/home/vagrant/my_ve" do
+  owner "vagrant"
+  group "vagrant"
+  action :create
+end
+
+python_pip "balanced" do
+  virtualenv "/home/vagrant/my_ve"
+  action :install
+end
+
+bash "Initial loading of virtualenv requirements" do
+   code <<-EOH
+  source /home/vagrant/my_ve/bin/activate
+  git clone https://github.com/balanced/balanced-python.git
+  cd ..
+  cd ..
+  cd balanced-python
+  pip install -r test-requirements.txt
+  pip install -r requirements.txt
+  EOH
+end
+

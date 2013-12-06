@@ -7,6 +7,7 @@ version           "1.2.2"
 
 depends           "build-essential"
 depends           "yum"
+depends           "git"
 
 recipe "python", "Installs python, pip, and virtualenv"
 recipe "python::package", "Installs python using packages."
